@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wjqt1yF9Okww1YE4jrk2uJG5Hd7IIt9DiarSebYfsQF5TzZz8OKS8wZrVzz5RwmyU5aKQHTL2vP8vK8IhweTtQ==",
+  "dgSpecHash": "Bl+Qv6bEo3DKRn/8U2ux53zpOiZM9AEGPBHlJ6KrrTByEbPgm73uVh48vhJCOtREt0YZlkENLQOvp4+3SIZMhw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Depka\\Desktop\\kiii_proekt\\TeamProject.Backend\\SecondHandEShop.Api\\SecondHandEShop.Api.csproj",
   "expectedPackageFiles": [
@@ -44,6 +44,7 @@
     "C:\\Users\\Depka\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.32.0\\microsoft.identitymodel.tokens.6.32.0.nupkg.sha512",
     "C:\\Users\\Depka\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\Depka\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
+    "C:\\Users\\Depka\\.nuget\\packages\\microsoft.visualstudio.azure.containers.tools.targets\\1.18.1\\microsoft.visualstudio.azure.containers.tools.targets.1.18.1.nupkg.sha512",
     "C:\\Users\\Depka\\.nuget\\packages\\microsoft.win32.registry\\4.7.0\\microsoft.win32.registry.4.7.0.nupkg.sha512",
     "C:\\Users\\Depka\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",
     "C:\\Users\\Depka\\.nuget\\packages\\namotion.reflection\\2.1.2\\namotion.reflection.2.1.2.nupkg.sha512",

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -43,6 +44,7 @@ namespace SecondHandEShop.Api
                  });
 
             services.AddControllers();
+
             services.AddDbContext<AppDbContext>();
 
 
@@ -104,6 +106,11 @@ namespace SecondHandEShop.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            using var serviceScope = app.ApplicationServices.CreateScope();
+            using var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
+            dbContext?.Database.Migrate();
+
 
             app.UseHttpsRedirection();
 
