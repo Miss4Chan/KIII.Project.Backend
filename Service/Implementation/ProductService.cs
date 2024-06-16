@@ -2,8 +2,7 @@
 using Domain.DTO;
 using Domain.Enums;
 using Domain.Identity;
-using Microsoft.
-    Core.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Repository;

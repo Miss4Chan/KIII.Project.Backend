@@ -38,21 +38,19 @@ namespace SecondHandEShop.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers()
-                 .AddNewtonsoftJson(options => // Add the configuration for Newtonsoft.Json here
+                .AddNewtonsoftJson(options =>
                 {
-                        options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-                 });
+                    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                });
 
-            services.AddControllers();
-
-            services.AddDbContext<AppDbContext>();
-
+            services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DbConnectionString")));
 
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
-            services.AddScoped(typeof(IOrderRepository), typeof(OrderRepository));
-            services.AddScoped(typeof(ICommentRepository), typeof(CommentRepository));
-            services.AddScoped(typeof(IProductRepository), typeof(ProductRepository));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
 
             services.AddTransient<IProductService, ProductService>();
             services.AddTransient<IUserProfileService, UserProfileService>();
@@ -63,21 +61,23 @@ namespace SecondHandEShop.Api
             services.AddTransient<IPasswordHasher, PasswordHasher>();
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<ICommentService, CommentService>();
-            //
             services.AddTransient<IRentedService, RentedService>();
+
             services.AddSwaggerDocument(settings =>
             {
                 settings.Title = "Second Hand EShop";
             });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("SecondHandEshopPolicy", builder =>
-                 {
-                     builder.WithOrigins("http://localhost:3000")
+                {
+                    builder.WithOrigins("http://localhost:3000")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
-                 });
+                });
             });
+
             var secret = Environment.GetEnvironmentVariable("JWT_SECRET");
             var issuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
 
@@ -86,17 +86,16 @@ namespace SecondHandEShop.Api
                 opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                        .AddJwtBearer(opts =>
-                        {
-                            opts.TokenValidationParameters = new TokenValidationParameters
-                            {
-                                ValidateIssuerSigningKey = true,
-                                ValidIssuer = issuer,
-                                ValidateAudience = false,
-                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret))
-                            };
-                        });
-
+            .AddJwtBearer(opts =>
+            {
+                opts.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = issuer,
+                    ValidateAudience = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secret))
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -107,11 +106,11 @@ namespace SecondHandEShop.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            using var serviceScope = app.ApplicationServices.CreateScope();
-            using var dbContext = serviceScope.ServiceProvider.GetService<AppDbContext>();
-            dbContext?.Database.Migrate();
-
-
+           using (var serviceScope = app.ApplicationServices.CreateScope())
+    	{
+        	var dbContext = serviceScope.ServiceProvider.GetRequiredService<AppDbContext>();
+        	dbContext.Database.Migrate();
+    	}
             app.UseHttpsRedirection();
 
             app.UseRouting();
