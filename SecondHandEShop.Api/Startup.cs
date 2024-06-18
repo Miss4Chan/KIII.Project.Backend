@@ -72,7 +72,7 @@ namespace SecondHandEShop.Api
             {
                 options.AddPolicy("SecondHandEshopPolicy", builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000")
+                    builder.WithOrigins("http://shs-client.local")
                         .AllowAnyHeader()
                         .AllowAnyMethod();
                 });
